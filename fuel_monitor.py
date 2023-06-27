@@ -14,7 +14,7 @@ def calculate_fuel(distance: "Total distance of the journey", initial_fuel: "Cur
 
     # Calculate the distance
     while distance_covered < distance:
-        if fuel_spent >= current_fuel:
+        if fuel_spent >= initial_fuel:
             rc.log("[red]Out of fuel!")
             break
 
