@@ -1,6 +1,6 @@
 from rich.logging import Console
 
-console = Console()
+rc = Console()
 
 def calculate_fuel(distance: "Total distance of the journey", initial_fuel: "Current fuel in the tank"):
     """
@@ -15,7 +15,7 @@ def calculate_fuel(distance: "Total distance of the journey", initial_fuel: "Cur
     # Calculate the distance
     while distance_covered < distance:
         if fuel_spent >= current_fuel:
-            console.log("[red]Out of fuel!")
+            rc.log("[red]Out of fuel!")
             break
 
         fuel_required = (distance - distance_covered) / mileage
@@ -26,19 +26,19 @@ def calculate_fuel(distance: "Total distance of the journey", initial_fuel: "Cur
 
         fuel_spent += fuel_required
         distance_covered += fuel_required * mileage
-
-        console.log("[yellow]Distance Covered : {:.2f} km | Fuel Spent : {:.2f} litres".format(distance_covered, fuel_spent))
+        
+        rc.log("[yellow]Distance Covered : {:.2f} km | Fuel Spent : {:.2f} litres".format(distance_covered, fuel_required))
     
     # Conclusion
     if distance_covered >= distance:
-        console.log("[yellow]Reached the destination!")
+        rc.log("[yellow]Reached the destination!")
     else:
-        console.log("[red]Unable to complete the journey.")
-        console.log("[green]Total fuel required for the journey : {:.2f} litres | Distance left : {:.2f} km".format((distance / mileage) - fuel_spent,
+        rc.log("[red]Unable to complete the journey.")
+        rc.log("[green]Total fuel required for the journey : {:.2f} litres | Distance left : {:.2f} km".format((distance / mileage) - fuel_spent,
             (distance - distance_covered)))
     
 
 # Run the function
-distance_to_travel = int(input("Distance to cover : "))
-current_fuel = int(input("Current fuel in tank : "))
+distance_to_travel = int(rc.input("[green]Distance to cover : "))
+current_fuel = int(rc.input("[green]Current fuel in tank : "))
 calculate_fuel(distance_to_travel, current_fuel)
