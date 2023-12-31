@@ -3,7 +3,7 @@ import numpy as np
 
 rc = Console()
 
-Class Vehicles():
+class Vehicles():
     """All vehicle details"""
 	
     def Honda_Dio():
@@ -15,3 +15,12 @@ Class Vehicles():
     	fuel_capacity = 5.3
 	mileage = 40
     	optimum_speed = np.range(35,46,1)
+
+class Camera():
+    """Camera details"""
+
+    def Mirrorless_cam():
+        FHD = 35.64             # minutes
+        HD = 119.27             # minutes
+        VGA = 9999              # minutes
+        battery = 3             # hours
