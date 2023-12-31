@@ -24,3 +24,9 @@ class Camera():
         HD = 119.27             # minutes
         VGA = 9999              # minutes
         battery = 3             # hours
+
+class location():
+    """Location details"""
+
+    def place():
+
