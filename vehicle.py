@@ -25,6 +25,9 @@ class Camera():
         VGA = 9999              # minutes
         battery = 3             # hours
 
+    def start_camera():
+        rc.log(battery, style="green")
+
 class location():
     """Location details"""
 
