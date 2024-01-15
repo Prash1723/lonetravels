@@ -32,6 +32,20 @@ class Vehicles(self, speed):
         in_cap = self.Honda_Dio
         if in_cap['speed'] = 
 
+    def refuel(self, distance: "Distance to be covered", initial_fuel: "Initial fuel in the tank"):
+        """ Calculates the refueling time for the vehicle during a journey"""
+        fuel_capacity = 5.3         # Litres
+        mileage = 44                # kmpl
+        fuel_spent = 0
+        distance_covered = 0 
+
+        signal_dict = {1.2: "Low fuel", 0.6: "Very low fuel"}
+
+        while distance_covered < distance:
+            for k, v in signal_dict.items():
+                if fuel_spent == k:
+                    rc.log("Fuel capacity : {:.2f} | {:.2f}".format(k,v))
+
 class Camera(self):
     """Camera details"""
     self.on_time = on_time
@@ -54,4 +68,3 @@ class location(self):
     """Location details"""
 
     def place(self):
-
