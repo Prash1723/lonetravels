@@ -15,6 +15,8 @@ class Vehicles(self, speed):
     self.fuel_capactiy = fuel_capacity
     self.mileage = mileage
     self.optimum_speed = optimum_speed
+    self.distance = distance
+    self.in_fuel = in_fuel
 
     def Honda_Dio(self):
 	fuel_capacity = 5.3                         # Litres
@@ -32,12 +34,12 @@ class Vehicles(self, speed):
         in_cap = self.Honda_Dio
         if in_cap['speed'] = 
 
-    def refuel(self, distance: "Distance to be covered", initial_fuel: "Initial fuel in the tank"):
-        """ Calculates the refueling time for the vehicle during a journey"""
+    def fuel_in_tank(self, distance: "Distance to be covered", in_fuel: "Initial fuel in the tank"):
+        """ Calculates the fuel for the vehicle during a journey"""
         fuel_capacity = 5.3         # Litres
         mileage = 44                # kmpl
         fuel_spent = 0
-        distance_covered = 0 
+        distance_covered = 0
 
         signal_dict = {1.2: "Low fuel", 0.6: "Very low fuel"}
 
