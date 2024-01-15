@@ -7,7 +7,7 @@ now = datetime.now()
 
 rc = Console()
 
-class Vehicles(self, speed):
+class Vehicles(self):
     """All vehicle details"""
     self.speed = speed
     self.start_time = datetime.now()
@@ -19,10 +19,11 @@ class Vehicles(self, speed):
     self.in_fuel = in_fuel
 
     def Honda_Dio(self):
-	fuel_capacity = 5.3                         # Litres
+        fuel_capacity = 5.3                         # Litres
         mileage = 44                                # KMPL
     	optimum_speed = np.range(35,46,1)
         speed = 0                                   # KMPH
+        return {'fuel_capacity': fuel_capacity, 'mileage': mileage, 'optimum_speed': optimum_speed, 'speed': speed}
 
     def Honda_Activa(self):
         fuel_capacity = 5.3                         # Litres
