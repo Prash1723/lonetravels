@@ -1,6 +1,6 @@
-from bots.vehicles import Honda_Dio
+from bots import Vehicles
 
-rc = Honda_Dio()
+rc = Vehicles.Honda_Dio()
 
 
 print(rc)
