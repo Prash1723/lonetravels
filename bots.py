@@ -7,10 +7,10 @@ now = datetime.now()
 
 rc = Console()
 
-class Vehicles:
+class Vehicles():
     """All vehicle details"""
 
-    def __init__(self):
+    def __init__(self, speed, start_time, mv_time, fuel_capacity, mileage, optimum_speed, distance, in_fuel):
         self.speed = speed
         self.start_time = datetime.now()
         self.mv_time = mv_time
@@ -33,10 +33,6 @@ class Vehicles:
         optimum_speed = np.arange(35,46,1)
         speed = 0                                   # KMPH
 
-    def moving_vehicle(self):
-        in_cap = self.Honda_Dio
-        #if in_cap['speed'] = 
-
     def fuel_in_tank(self, distance: "Distance to be covered", in_fuel: "Initial fuel in the tank"):
         """ Calculates the fuel for the vehicle during a journey"""
         fuel_capacity = 5.3         # Litres
@@ -50,14 +46,14 @@ class Vehicles:
                 if fuel_spent == k:
                     rc.log("Fuel capacity : {:.2f} | {:.2f}".format(k,v))
 
-class Camera:
+class Camera():
     """Camera details"""
     def __init__(self):
-        self.on_time = on_time
-        self.battery = battery
-        self.FHD = FHD
-        self.HD = HD
-        self.VGA = VGA
+        #self.on_time = on_time
+        self.battery = 180
+        self.FHD = 2138
+        self.HD = 7156
+        self.VGA = 599940
 
     def Mirrorless_cam(self):
         FHD = 35.64             # minutes
@@ -65,11 +61,25 @@ class Camera:
         VGA = 9999              # minutes
         battery = 3             # hours
 
-    def start_camera(self):
+    def camera_runtime(self, battery):
         
-        rc.log(battery, style="green")
+        battery_left = battery - time.time()
+        rc.log("Camera battery time : {:.2f}".format(battery_left), style="green")
+        battery = battery_left
 
-class location:
+    def run(self):
+        """Camera runtime"""
+        bot_on = True
+        while bot_on:
+            #cam_data = {"FHD": self.FHD, "HD": self.HD, "VGA": self.VGA, "battery": self.battery}
+            self.camera_runtime(self.battery)
+
+            next_step = str(input("Do you wish to recheck the camera battery? (Y/n) :")).lower()
+
+            #if next_step == "y":
+
+
+class location():
     """Location details"""
 
     #def place(self):

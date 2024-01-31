@@ -1,6 +1,5 @@
-from bots import Vehicles
+from bots import Camera
 
-rc = Vehicles.Honda_Dio()
+rc = Camera()
 
-
-print(rc)
+rc.run()
