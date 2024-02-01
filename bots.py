@@ -10,7 +10,8 @@ rc = Console()
 class Vehicles():
     """All vehicle details"""
 
-    def __init__(self, speed, start_time, mv_time, fuel_capacity, mileage, optimum_speed, distance, in_fuel):
+    def __init__(self, vehicle, speed, start_time, mv_time, fuel_capacity, mileage, optimum_speed, distance, in_fuel):
+        self.vehicle = vehicle
         self.speed = speed
         self.start_time = datetime.now()
         self.mv_time = mv_time
@@ -32,11 +33,18 @@ class Vehicles():
         mileage = 40                                # KMPL
         optimum_speed = np.arange(35,46,1)
         speed = 0                                   # KMPH
+        return {'fuel_capacity': fuel_capacity, 'mileage': mileage, 'optimum_speed': optimum_speed, 'speed': speed}
 
     def fuel_in_tank(self, distance: "Distance to be covered", in_fuel: "Initial fuel in the tank"):
         """ Calculates the fuel for the vehicle during a journey"""
-        fuel_capacity = 5.3         # Litres
-        mileage = 44                # kmpl
+        if self.vehicle=='dio':
+            initial_data = self.Honda_Dio()
+        if self.vehicle=='activa':
+            initial_data = self.Honda_Activa()
+
+        
+        fuel_capacity = initial_data['fuel_capacity']         # Litres
+        mileage = initial_data['mileage']                # kmpl
         fuel_spent = 0
         distance_covered = 0
 
@@ -45,6 +53,11 @@ class Vehicles():
             for k, v in signal_dict.items():
                 if fuel_spent == k:
                     rc.log("Fuel capacity : {:.2f} | {:.2f}".format(k,v))
+
+    def run(self):
+        bot_on == "True"
+        while bot_on:
+
 
 class Camera():
     """Camera details"""
