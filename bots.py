@@ -72,11 +72,14 @@ class Camera():
         bot_on = True
         while bot_on:
             #cam_data = {"FHD": self.FHD, "HD": self.HD, "VGA": self.VGA, "battery": self.battery}
-            self.camera_runtime(self.battery)
 
             next_step = str(input("Do you wish to recheck the camera battery? (Y/n) :")).lower()
 
-            #if next_step == "y":
+            if next_step == "y":
+                self.camera_runtime(self.battery)
+
+            else:
+                break
 
 
 class location():
