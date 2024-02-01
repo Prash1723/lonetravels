@@ -48,18 +48,24 @@ class Vehicles():
 
 class Camera():
     """Camera details"""
-    def __init__(self):
+    def __init__(self, memory):
         #self.on_time = on_time
+        self.memory = memory
         self.battery = 180
         self.FHD = 2138
         self.HD = 7156
         self.VGA = 599940
 
-    def Mirrorless_cam(self):
-        FHD = 35.64             # minutes
-        HD = 119.27             # minutes
-        VGA = 9999              # minutes
-        battery = 3             # hours
+    def ML_cam(self):
+        x = {}
+        if self.memory == '8gb':
+            x = {
+            'battery': 180,                 # minutes
+            'FHD': 2138,                    # minutes
+            'HD': 7156,                     # minutes
+            'VGA': 599940                   # hours
+            }
+        return x
 
     def camera_runtime(self, battery):
         
@@ -68,7 +74,7 @@ class Camera():
         battery = battery_left
 
     def run(self):
-        """Camera runtime"""
+        """Camera runtime"""  
         bot_on = True
         while bot_on:
             #cam_data = {"FHD": self.FHD, "HD": self.HD, "VGA": self.VGA, "battery": self.battery}
@@ -76,7 +82,7 @@ class Camera():
             next_step = str(input("Do you wish to recheck the camera battery? (Y/n) :")).lower()
 
             if next_step == "y":
-                self.camera_runtime(self.battery)
+                self.camera_runtime(self.ML_cam()['battery'])
 
             else:
                 break
