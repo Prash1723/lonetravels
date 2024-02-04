@@ -82,28 +82,17 @@ class Camera():
         return x
 
     def camera_runtime(self, battery):
-        
-        battery_left = battery - time.time()
-        rc.log("Camera battery time : {:.2f}".format(battery_left), style="green")
-        battery = battery_left
  
-        # Calculate the total number of seconds
+        # Assign the total minutes left for recording
         battery_left = battery
  
-        # While loop that checks if total_seconds reaches zero
-        # If not zero, decrement total time by one second
+        # Loop to battery minutes
         while battery_left > 0:
  
-            # Timer represents time left on countdown
+            # Countdown timer
             timer = datetime.timedelta(minutes = battery_left)
-        
-            # Prints the time left on the timer
             rc.log(timer, end="\r")
- 
-            # Delays the program one second
             time.sleep(60)
- 
-            # Reduces total time by one second
             battery_left -= 1
  
         rc.log("Alert: Low Battery!", style="Red")
