@@ -2,6 +2,7 @@ from rich.console import Console
 import numpy as np
 import time
 from datetime import datetime
+import datetime
 
 now = datetime.now()
 
@@ -71,7 +72,7 @@ class Camera():
 
     def ML_cam(self):
         x = {}
-        if self.memory == '8gb':
+        if self.memory=='8gb':
             x = {
             'battery': 180,                 # minutes
             'FHD': 2138,                    # minutes
@@ -85,6 +86,27 @@ class Camera():
         battery_left = battery - time.time()
         rc.log("Camera battery time : {:.2f}".format(battery_left), style="green")
         battery = battery_left
+ 
+        # Calculate the total number of seconds
+        battery_left = battery
+ 
+        # While loop that checks if total_seconds reaches zero
+        # If not zero, decrement total time by one second
+        while battery_left > 0:
+ 
+            # Timer represents time left on countdown
+            timer = datetime.timedelta(minutes = battery_left)
+        
+            # Prints the time left on the timer
+            rc.log(timer, end="\r")
+ 
+            # Delays the program one second
+            time.sleep(60)
+ 
+            # Reduces total time by one second
+            battery_left -= 1
+ 
+        rc.log("Alert: Low Battery!", style="Red")
 
     def run(self):
         """Camera runtime"""  
@@ -98,7 +120,7 @@ class Camera():
                 self.camera_runtime(self.ML_cam()['battery'])
 
             else:
-                break
+                bot_on=False
 
 
 class location():
