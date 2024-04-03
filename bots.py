@@ -62,23 +62,30 @@ class Vehicles():
 
 class Camera():
     """Camera details"""
-    def __init__(self, memory):
+    def __init__(self, memory, format):
         #self.on_time = on_time
         self.memory = memory
         self.battery = 180
-        self.FHD = 2138
-        self.HD = 7156
-        self.VGA = 599940
+        self.format = format
 
     def ML_cam(self):
         x = {}
         if self.memory=='8gb':
-            x = {
-            'battery': 180,                 # minutes
-            'FHD': 2138,                    # minutes
-            'HD': 7156,                     # minutes
-            'VGA': 599940                   # hours
-            }
+            if self.format=='FHD':
+                x = {
+                'battery': 180,                 # minutes
+                'memory': 2138,                 # minutes
+                }
+            if self.format=='HD':
+                x = {
+                'battery': 180,                 # minutes
+                'memory': 7156,                 # minutes
+                }
+            if self.format=='VGA':
+                x = {
+                'battery': 180,                 # minutes
+                'memory': 599940                # minutes
+                }
         return x
 
     def camera_runtime(self, battery):
@@ -115,4 +122,4 @@ class Camera():
 class location():
     """Location details"""
 
-    #def place(self):
+    #def place(self)
