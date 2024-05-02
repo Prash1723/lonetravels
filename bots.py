@@ -3,10 +3,28 @@ import numpy as np
 import time
 from datetime import datetime
 import datetime
+import logging
+
 
 now = datetime.now()
 
 rc = Console()
+
+# Format for logging
+FORMAT='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+# Configuration for logging
+logging.basicConfig(
+    level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+)
+
+# Assign logger
+log = logging.getLogger("rich")
+
+# File output settings
+FileOut = logging.FileHandler('app.log')
+
+log.addHandler(FileOut)
 
 class Vehicles():
     """All vehicle details"""
