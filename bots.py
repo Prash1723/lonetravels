@@ -126,7 +126,7 @@ class Camera():
  
             # Countdown timer
             timer = datetime.timedelta(minutes = battery_left)
-            rc.log(timer, end="\r")
+            log.info(timer, end="\r")
             time.sleep(60)
             battery_left -= 1
  
