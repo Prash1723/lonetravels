@@ -1,10 +1,10 @@
 from rich.console import Console
+from rich.logging import RichHandler
 import numpy as np
 import time
 from datetime import datetime
 import datetime
 import logging
-
 
 now = datetime.now()
 
@@ -56,22 +56,26 @@ class Vehicles():
 
     def fuel_in_tank(self, distance: "Distance to be covered", in_fuel: "Initial fuel in the tank"):
         """ Calculates the fuel for the vehicle during a journey"""
-        if self.vehicle=='dio':
-            initial_data = self.Honda_Dio()
-        if self.vehicle=='activa':
-            initial_data = self.Honda_Activa()
+        try:
+            if self.vehicle=='dio':
+                initial_data = self.Honda_Dio()
+            if self.vehicle=='activa':
+                initial_data = self.Honda_Activa()
 
+            
+            fuel_capacity = initial_data['fuel_capacity']         # Litres
+            mileage = initial_data['mileage']                # kmpl
+            fuel_spent = 0
+            distance_covered = 0
+
+            signal_dict = {1.2: "Low fuel", 0.6: "Very low fuel"}
+            while distance_covered < distance:
+                for k, v in signal_dict.items():
+                    if fuel_spent == k:
+                        log.info("Fuel capacity : {:.2f} | {:.2f}".format(k,v))
         
-        fuel_capacity = initial_data['fuel_capacity']         # Litres
-        mileage = initial_data['mileage']                # kmpl
-        fuel_spent = 0
-        distance_covered = 0
-
-        signal_dict = {1.2: "Low fuel", 0.6: "Very low fuel"}
-        while distance_covered < distance:
-            for k, v in signal_dict.items():
-                if fuel_spent == k:
-                    rc.log("Fuel capacity : {:.2f} | {:.2f}".format(k,v))
+        except Exception as e:
+            log.error(f"Error : {e}")
 
     def run(self):
         bot_on == "True"
@@ -120,7 +124,7 @@ class Camera():
             time.sleep(60)
             battery_left -= 1
  
-        rc.log("Alert: Low Battery!", style="Red")
+        log.warning("Alert: Low Battery!")
 
     def run(self):
         """Camera runtime"""  
