@@ -27,7 +27,9 @@ FileOut = logging.FileHandler('app.log')
 log.addHandler(FileOut)
 
 class Vehicles():
-    """All vehicle details"""
+    """
+    All vehicle details
+    """
 
     def __init__(self, vehicle, speed, start_time, mv_time, fuel_capacity, mileage, optimum_speed, distance, in_fuel):
         self.vehicle = vehicle
@@ -55,7 +57,9 @@ class Vehicles():
         return {'fuel_capacity': fuel_capacity, 'mileage': mileage, 'optimum_speed': optimum_speed, 'speed': speed}
 
     def fuel_in_tank(self, distance: "Distance to be covered", in_fuel: "Initial fuel in the tank"):
-        """ Calculates the fuel for the vehicle during a journey"""
+        """
+        Calculates the fuel for the vehicle during a journey
+        """
         try:
             if self.vehicle=='dio':
                 initial_data = self.Honda_Dio()
@@ -83,7 +87,9 @@ class Vehicles():
 
 
 class Camera():
-    """Camera details"""
+    """
+    Camera details
+    """
     def __init__(self, memory, format):
         #self.on_time = on_time
         self.memory = memory
@@ -127,7 +133,9 @@ class Camera():
         log.warning("Alert: Low Battery!")
 
     def run(self):
-        """Camera runtime"""  
+        """
+        Camera runtime
+        """  
         bot_on = True
         while bot_on:
             #cam_data = {"FHD": self.FHD, "HD": self.HD, "VGA": self.VGA, "battery": self.battery}
@@ -142,6 +150,8 @@ class Camera():
 
 
 class location():
-    """Location details"""
+    """
+    Location details
+    """
 
     #def place(self)
