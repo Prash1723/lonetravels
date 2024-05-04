@@ -114,6 +114,24 @@ class Camera():
                 'battery': 180,                 # minutes
                 'memory': 599940                # minutes
                 }
+
+        if self.memory=='16gb':
+            if self.format=='FHD':
+                x = {
+                'battery': 180,                 # minutes
+                'memory': 2138*2,               # minutes
+                }
+            if self.format=='HD':
+                x = {
+                'battery': 180,                 # minutes
+                'memory': 7156*2,               # minutes
+                }
+            if self.format=='VGA':
+                x = {
+                'battery': 180,                 # minutes
+                'memory': 599940*2              # minutes
+                }
+
         return x
 
     def camera_runtime(self, battery):
