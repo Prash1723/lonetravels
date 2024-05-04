@@ -90,11 +90,11 @@ class Camera():
     """
     Camera details
     """
-    def __init__(self, memory, format):
+    def __init__(self, memory, FORMAT):
         #self.on_time = on_time
         self.memory = memory
         self.battery = 180
-        self.format = format
+        self.format = FORMAT
 
     def ML_cam(self):
         x = {}
