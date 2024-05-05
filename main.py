@@ -2,4 +2,5 @@ from bots import Camera
 
 rc = Camera('8gb', 'HD')
 
-rc.run()
+if __name__ == "__main__":
+    rc.run()
