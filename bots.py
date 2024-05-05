@@ -6,8 +6,6 @@ from datetime import datetime
 import datetime
 import logging
 
-now = datetime.now()
-
 rc = Console()
 
 # Format for logging
@@ -81,9 +79,9 @@ class Vehicles():
         except Exception as e:
             log.error(f"Error : {e}")
 
-    def run(self):
-        bot_on == "True"
-        while bot_on:
+    # def run(self):
+    #     bot_on == "True"
+    #     while bot_on:
 
 
 class Camera():
