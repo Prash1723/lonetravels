@@ -1,5 +1,11 @@
 from rich.console import Console
 from rich.logging import RichHandler
+from rich.panel import Panel
+from rich.live import Live
+from rich.table import Table
+from rich.layout import Layout
+from rich.columns import Columns
+
 import numpy as np
 import time
 from datetime import datetime
@@ -65,8 +71,8 @@ class Vehicles():
                 initial_data = self.Honda_Activa()
 
             
-            fuel_capacity = initial_data['fuel_capacity']         # Litres
-            mileage = initial_data['mileage']                # kmpl
+            fuel_capacity = initial_data['fuel_capacity']           # Litres
+            mileage = initial_data['mileage']                       # kmpl
             fuel_spent = 0
             distance_covered = 0
 
@@ -142,8 +148,8 @@ class Camera():
  
             # Countdown timer
             timer = datetime.timedelta(minutes = battery_left)
-            log.info(timer, end="\r")
-            time.sleep(60)
+            log.info(timer)
+            time.sleep(5)
             battery_left -= 1
  
         log.warning("Alert: Low Battery!")
@@ -151,18 +157,29 @@ class Camera():
     def run(self):
         """
         Camera runtime
-        """  
+        """
+
+        # Add all the tables to a panel
+        pan = Panel.fit(
+            Columns(self.camera_runtime(self.ML_cam()['battery'])),
+            title="Camera Battery",         # Title of the panel
+            width=80,                       # Width of the panel
+            border_style="red",             # Adding border panel
+            padding=(1,2)                   # Space between tables
+        )
         bot_on = True
-        while bot_on:
-            #cam_data = {"FHD": self.FHD, "HD": self.HD, "VGA": self.VGA, "battery": self.battery}
+        # Clear console
+        rc.clear()
+        # Print the tables
+        with Live(pan, refresh_per_second=60) as live:
+            while bot_on:
+                next_step = str(input("Do you wish to recheck the camera battery? (Y/n) :")).lower()
 
-            next_step = str(input("Do you wish to recheck the camera battery? (Y/n) :")).lower()
-
-            if next_step == "y":
-                self.camera_runtime(self.ML_cam()['battery'])
-
-            else:
-                bot_on=False
+                if next_step == "y":
+                    live.update(pan)
+                    time.sleep(5)
+                else:
+                    bot_on=False
 
 
 class location():
