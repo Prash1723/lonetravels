@@ -137,37 +137,25 @@ class Camera():
                 }
 
         return x
-
-    def camera_runtime(self, battery):
  
-        # Assign the total minutes left for recording
-        battery_left = battery
- 
-        # Loop to battery minutes
-        while battery_left > 0:
- 
-            # Countdown timer
-            timer = datetime.timedelta(minutes = battery_left)
-            log.info(timer)
-            time.sleep(5)
-            battery_left -= 1
- 
-        log.warning("Alert: Low Battery!")
-
     def run(self):
         """
         Camera runtime
         """
-
         # Add all the tables to a panel
         pan = Panel.fit(
-            Columns(self.camera_runtime(self.ML_cam()['battery'])),
+            Columns(self.ML_cam()['battery']),
             title="Camera Battery",         # Title of the panel
             width=80,                       # Width of the panel
             border_style="red",             # Adding border panel
             padding=(1,2)                   # Space between tables
         )
+
+        # Assign the total minutes left for recording
+        battery_left = battery
+
         bot_on = True
+
         # Clear console
         rc.clear()
         # Print the tables
@@ -175,10 +163,16 @@ class Camera():
             while bot_on:
                 next_step = str(input("Do you wish to recheck the camera battery? (Y/n) :")).lower()
 
-                if next_step == "y":
+                if next_step == "y" and battery_left > 0:
+                    # Countdown timer
+                    timer = datetime.timedelta(minutes = battery_left)
+                    #log.info(timer)
+                    time.sleep(5)
+                    battery_left -= 1
                     live.update(pan)
                     time.sleep(5)
                 else:
+                    log.warning("Alert: Low Battery!")
                     bot_on=False
 
 
