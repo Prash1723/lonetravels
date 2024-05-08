@@ -35,14 +35,14 @@ class Vehicles():
     All vehicle details
     """
 
-    def __init__(self, vehicle, speed, start_time, mv_time, fuel_capacity, mileage, optimum_speed, distance, in_fuel):
+    def __init__(self, vehicle, speed, distance, in_fuel):
         self.vehicle = vehicle
         self.speed = speed
-        self.start_time = datetime.now()
-        self.mv_time = mv_time
-        self.fuel_capactiy = fuel_capacity
-        self.mileage = mileage
-        self.optimum_speed = optimum_speed
+        # self.start_time = datetime.now()
+        # self.mv_time = mv_time
+        # self.fuel_capactiy = fuel_capacity
+        # self.mileage = mileage
+        # self.optimum_speed = optimum_speed
         self.distance = distance
         self.in_fuel = in_fuel
 
@@ -85,9 +85,38 @@ class Vehicles():
         except Exception as e:
             log.error(f"Error : {e}")
 
-    # def run(self):
-    #     bot_on == "True"
-    #     while bot_on:
+    def run(self):
+        # Add all the tables to a panel
+        pan = Panel.fit(
+            Columns(self.Honda_Dio()['fuel_capacity']),
+            title="Camera Battery",         # Title of the panel
+            width=80,                       # Width of the panel
+            border_style="red",             # Adding border panel
+            padding=(1,2)                   # Space between tables
+        )
+
+        # Assign the total minutes left for recording
+        fuel_left = self.fuel_in_tank()
+
+        bot_on = True
+
+        # Clear console
+        rc.clear()
+        bot_on == "True"
+        while bot_on:
+            next_step = str(input("Do you wish to recheck the camera battery? (Y/n) :")).lower()
+
+            if next_step == 'y':
+                # Countdown timer
+                timer = datetime.timedelta(minutes = fuel_left)
+                #log.info(timer)
+                time.sleep(5)
+                fuel_left -= 1
+                live.update(pan)
+                time.sleep(5)
+            else:
+                log.warning("Alert: Low Battery!")
+                bot_on=False
 
 
 class Camera():
