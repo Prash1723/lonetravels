@@ -60,7 +60,7 @@ class Vehicles():
         speed = 0                                   # KMPH
         return {'fuel_capacity': fuel_capacity, 'mileage': mileage, 'optimum_speed': optimum_speed, 'speed': speed}
 
-    def fuel_in_tank(self, distance: "Distance to be covered", in_fuel: "Initial fuel in the tank"):
+    def fuel_in_tank(self, dist_covered: "Distance to be covered", in_fuel: "Initial fuel in the tank"):
         """
         Calculates the fuel for the vehicle during a journey
         """
@@ -73,11 +73,12 @@ class Vehicles():
             
             fuel_capacity = initial_data['fuel_capacity']           # Litres
             mileage = initial_data['mileage']                       # kmpl
-            fuel_spent = 0
-            distance_covered = 0
+            fuel_spent = dist_covered/initial_data['mileage']       # Calculate fuel spent
+            max_distance = initial_data['mileage']*in_fuel          # Maximum distance possible
+
 
             signal_dict = {1.2: "Low fuel", 0.6: "Very low fuel"}
-            while distance_covered < distance:
+            while distance_covered < max_distance:
                 for k, v in signal_dict.items():
                     if fuel_spent == k:
                         log.info("Fuel capacity : {:.2f} | {:.2f}".format(k,v))
@@ -88,7 +89,7 @@ class Vehicles():
     def run(self):
         # Add all the tables to a panel
         pan = Panel.fit(
-            Columns(self.Honda_Dio()['fuel_capacity']),
+            Columns(self.fuel_in_tank()['fuel_capacity']),
             title="Camera Battery",         # Title of the panel
             width=80,                       # Width of the panel
             border_style="red",             # Adding border panel
