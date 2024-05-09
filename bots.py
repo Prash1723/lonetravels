@@ -35,15 +35,15 @@ class Vehicles():
     All vehicle details
     """
 
-    def __init__(self, vehicle, speed, distance, in_fuel):
+    def __init__(self, vehicle, dist_covered, in_fuel):
         self.vehicle = vehicle
-        self.speed = speed
+        # self.speed = speed
         # self.start_time = datetime.now()
         # self.mv_time = mv_time
         # self.fuel_capactiy = fuel_capacity
         # self.mileage = mileage
         # self.optimum_speed = optimum_speed
-        self.distance = distance
+        self.dist_covered = dist_covered
         self.in_fuel = in_fuel
 
     def Honda_Dio(self):
@@ -60,7 +60,7 @@ class Vehicles():
         speed = 0                                   # KMPH
         return {'fuel_capacity': fuel_capacity, 'mileage': mileage, 'optimum_speed': optimum_speed, 'speed': speed}
 
-    def fuel_in_tank(self, dist_covered: "Distance to be covered", in_fuel: "Initial fuel in the tank"):
+    def fuel_in_tank(self):
         """
         Calculates the fuel for the vehicle during a journey
         """
@@ -73,10 +73,12 @@ class Vehicles():
             
         fuel_capacity = initial_data['fuel_capacity']           # Litres
         mileage = initial_data['mileage']                       # kmpl
-        fuel_spent = dist_covered/initial_data['mileage']       # Calculate fuel spent
-        max_distance = initial_data['mileage']*in_fuel          # Maximum distance possible
+        fuel_spent = self.dist_covered/initial_data['mileage']       # Calculate fuel spent
+        max_distance = initial_data['mileage']*self.in_fuel          # Maximum distance possible
+        fuel_left = self.in_fuel - fuel_spent                        # Fuel left in tank
+        dist_left = max_distance - self.dist_covered
 
-        return 
+        return {'fuel_spent': fuel_spent, 'fuel_left': fuel_left, 'dist_left': dist_left, 'max_distance': max_distance}
 
 
     def run(self):
@@ -90,7 +92,7 @@ class Vehicles():
         # )
 
         # Assign the total minutes left for recording
-        fuel_left = self.fuel_in_tank()
+        data = self.fuel_in_tank()
 
         # bot_on = True
 
@@ -113,18 +115,21 @@ class Vehicles():
         #         bot_on=False
 
         signal_dict = {1.2: "Low fuel", 0.6: "Very low fuel"}
+        fuel_left = data['fuel_left']
+        dist_left = data['dist_left']
+        max_distance = data['max_distance']
+        fuel_spent = data['fuel_spent']
 
         try:
-            while dist_covered < max_distance:
+            while self.dist_covered < max_distance:
                 for k, v in signal_dict.items():
                     if fuel_spent > k:
-                        log.info(f"Fuel capacity : {in_fuel - fuel_spent} Litres | Fuel enough for {max_distance - dist_covered} km")
+                        log.info(f"Fuel capacity : {fuel_left} Litres | Fuel enough for {dist_left} km")
                     else:
-                        log.info(f"Fuel capacity : {k} Litres | {v} enough for {max_distance - dist_covered}")
+                        log.info(f"Fuel capacity : {k} Litres | {v} enough for {dist_left}")
 
         except Exception as e:
-            log,error(f"Error : {e}")
-
+            log.error(f"Error : {e}")
 
 class Camera():
     """
