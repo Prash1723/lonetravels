@@ -121,7 +121,7 @@ class Vehicles():
         fuel_spent = data['fuel_spent']
 
         try:
-            while self.dist_covered < max_distance:
+            if self.dist_covered < max_distance:
                 for k, v in signal_dict.items():
                     if fuel_spent > k:
                         log.info(f"Fuel capacity : {fuel_left} Litres | Fuel enough for {dist_left} km")
