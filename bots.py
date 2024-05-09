@@ -64,60 +64,66 @@ class Vehicles():
         """
         Calculates the fuel for the vehicle during a journey
         """
-        try:
-            if self.vehicle=='dio':
-                initial_data = self.Honda_Dio()
-            if self.vehicle=='activa':
-                initial_data = self.Honda_Activa()
+
+        if self.vehicle=='dio':
+            initial_data = self.Honda_Dio()
+        if self.vehicle=='activa':
+            initial_data = self.Honda_Activa()
 
             
-            fuel_capacity = initial_data['fuel_capacity']           # Litres
-            mileage = initial_data['mileage']                       # kmpl
-            fuel_spent = dist_covered/initial_data['mileage']       # Calculate fuel spent
-            max_distance = initial_data['mileage']*in_fuel          # Maximum distance possible
+        fuel_capacity = initial_data['fuel_capacity']           # Litres
+        mileage = initial_data['mileage']                       # kmpl
+        fuel_spent = dist_covered/initial_data['mileage']       # Calculate fuel spent
+        max_distance = initial_data['mileage']*in_fuel          # Maximum distance possible
 
+        return 
 
-            signal_dict = {1.2: "Low fuel", 0.6: "Very low fuel"}
-            while distance_covered < max_distance:
-                for k, v in signal_dict.items():
-                    if fuel_spent == k:
-                        log.info("Fuel capacity : {:.2f} | {:.2f}".format(k,v))
-        
-        except Exception as e:
-            log.error(f"Error : {e}")
 
     def run(self):
         # Add all the tables to a panel
-        pan = Panel.fit(
-            Columns(self.fuel_in_tank()['fuel_capacity']),
-            title="Camera Battery",         # Title of the panel
-            width=80,                       # Width of the panel
-            border_style="red",             # Adding border panel
-            padding=(1,2)                   # Space between tables
-        )
+        # pan = Panel.fit(
+        #     Columns(self.fuel_in_tank()['fuel_capacity']),
+        #     title="Camera Battery",         # Title of the panel
+        #     width=80,                       # Width of the panel
+        #     border_style="red",             # Adding border panel
+        #     padding=(1,2)                   # Space between tables
+        # )
 
         # Assign the total minutes left for recording
         fuel_left = self.fuel_in_tank()
 
-        bot_on = True
+        # bot_on = True
 
         # Clear console
-        rc.clear()
-        bot_on == "True"
-        while bot_on:
-            next_step = str(input("Do you wish to recheck the camera battery? (Y/n) :")).lower()
+        # rc.clear()
+        # bot_on == "True"
+        # while bot_on:
+        #     next_step = str(input("Do you wish to recheck the camera battery? (Y/n) :")).lower()
 
-            if next_step == 'y':
-                # Countdown timer
-                timer = datetime.timedelta(minutes = fuel_left)
-                #log.info(timer)
-                time.sleep(5)
-                fuel_left -= 1
-                live.update(pan)
-                time.sleep(5)
-            else:
-                log.warning("Alert: Low Battery!")
-                bot_on=False
+        #     if next_step == 'y':
+        #         # Countdown timer
+        #         timer = datetime.timedelta(minutes = fuel_left)
+        #         #log.info(timer)
+        #         time.sleep(5)
+        #         fuel_left -= 1
+        #         live.update(pan)
+        #         time.sleep(5)
+        #     else:
+        #         log.warning("Alert: Low Battery!")
+        #         bot_on=False
+
+        signal_dict = {1.2: "Low fuel", 0.6: "Very low fuel"}
+
+        try:
+            while dist_covered < max_distance:
+                for k, v in signal_dict.items():
+                    if fuel_spent > k:
+                        log.info(f"Fuel capacity : {in_fuel - fuel_spent} Litres | Fuel enough for {max_distance - dist_covered} km")
+                    else:
+                        log.info(f"Fuel capacity : {k} Litres | {v} enough for {max_distance - dist_covered}")
+
+        except Exception as e:
+            log,error(f"Error : {e}")
 
 
 class Camera():
