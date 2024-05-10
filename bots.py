@@ -114,11 +114,10 @@ class Vehicles():
         #         log.warning("Alert: Low Battery!")
         #         bot_on=False
 
-        signal_dict = {1.2: "Low fuel", 0.6: "Very low fuel"}
-        fuel_left = data['fuel_left']
-        dist_left = data['dist_left']
-        max_distance = data['max_distance']
-        fuel_spent = data['fuel_spent']
+        fuel_left = round(data['fuel_left'], 2)
+        dist_left = round(data['dist_left'], 2)
+        max_distance = round(data['max_distance'], 2)
+        fuel_spent = round(data['fuel_spent'], 2)
 
         try:
             if self.dist_covered < max_distance:
