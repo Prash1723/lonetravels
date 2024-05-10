@@ -122,11 +122,12 @@ class Vehicles():
 
         try:
             if self.dist_covered < max_distance:
-                for k, v in signal_dict.items():
-                    if fuel_spent > k:
-                        log.info(f"Fuel capacity : {fuel_left} Litres | Fuel enough for {dist_left} km")
-                    else:
-                        log.info(f"Fuel capacity : {k} Litres | {v} enough for {dist_left}")
+                if fuel_left > 1.2:
+                    log.info(f"Fuel capacity : {fuel_left} Litres | Fuel enough for {dist_left} km")
+                elif 1.2 < fuel_left < 0.6:
+                    log.warning(f"Fuel capacity : {fuel_left} Litres | Low fuel enough for {dist_left} km")
+                else:
+                    log.warning(f"Fuel capacity : {fuel_left} Litres | Very Low fuel enough for {dist_left} km | Refuel now!")
 
         except Exception as e:
             log.error(f"Error : {e}")
