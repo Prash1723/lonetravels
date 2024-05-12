@@ -53,7 +53,7 @@ class Vehicles():
         speed = 0                                   # KMPH
         return {'fuel_capacity': fuel_capacity, 'mileage': mileage, 'optimum_speed': optimum_speed, 'speed': speed}
 
-    def write_data(filename, data_log):
+    def write_data(self, filename, data_log):
         """
         Write the travel data into a csv file
         """
@@ -76,9 +76,9 @@ class Vehicles():
         max_distance = initial_data['mileage']*self.in_fuel             # Maximum distance possible
         fuel_left = self.in_fuel - fuel_spent                           # Fuel left in tank
         dist_left = max_distance - self.dist_covered
-        data_log = np.array(datetime.date(), self.vehicle, self.in_fuel, self.dist_covered, fuel_left, dist_left)
+        data_log = np.array([self.vehicle, self.in_fuel, self.dist_covered, fuel_left, dist_left])
 
-        write_data('data_log.csv', data_log)
+        self.write_data('data_log.csv', data_log)
 
         return {'fuel_spent': fuel_spent, 'fuel_left': fuel_left, 'dist_left': dist_left, 'max_distance': max_distance}
 
