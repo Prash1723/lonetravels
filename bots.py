@@ -34,7 +34,6 @@ class Vehicles():
     """
     All vehicle details
     """
-
     def __init__(self, vehicle, dist_covered, in_fuel):
         self.vehicle = vehicle
         self.dist_covered = dist_covered
@@ -54,11 +53,17 @@ class Vehicles():
         speed = 0                                   # KMPH
         return {'fuel_capacity': fuel_capacity, 'mileage': mileage, 'optimum_speed': optimum_speed, 'speed': speed}
 
+    def write_data(filename, data_log):
+        """
+        Write the travel data into a csv file
+        """
+        with open(filename, 'a') as file:
+            file.write(data_log)
+
     def fuel_in_tank(self):
         """
         Calculates the fuel for the vehicle during a journey
         """
-
         if self.vehicle=='dio':
             initial_data = self.Honda_Dio()
         if self.vehicle=='activa':
@@ -71,6 +76,9 @@ class Vehicles():
         max_distance = initial_data['mileage']*self.in_fuel             # Maximum distance possible
         fuel_left = self.in_fuel - fuel_spent                           # Fuel left in tank
         dist_left = max_distance - self.dist_covered
+        data_log = np.array(datetime.date(), self.vehicle, self.in_fuel, self.dist_covered, fuel_left, dist_left)
+
+        write_data('data_log.csv', data_log)
 
         return {'fuel_spent': fuel_spent, 'fuel_left': fuel_left, 'dist_left': dist_left, 'max_distance': max_distance}
 
@@ -179,10 +187,10 @@ class Camera():
                     battery_left -= 1
                     live.update(pan)
                     time.sleep(5)
+                
                 else:
                     log.warning("Alert: Low Battery!")
                     bot_on=False
-
 
 class location():
     """
