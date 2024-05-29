@@ -11,6 +11,8 @@ import time
 from datetime import datetime
 import datetime
 import logging
+import yaml
+import sys
 
 rc = Console()
 
@@ -39,12 +41,11 @@ class Vehicles():
         self.dist_covered = dist_covered
         self.in_fuel = in_fuel
 
-    def Honda_Dio(self):
-        fuel_capacity = 5.3                         # Litres
-        mileage = 44                                # KMPL
-        optimum_speed = np.arange(35,46,1)
-        speed = 0                                   # KMPH
-        return {'fuel_capacity': fuel_capacity, 'mileage': mileage, 'optimum_speed': optimum_speed, 'speed': speed}
+    def load_data(self):
+        stream = open(sys.argv[1], 'r')                                   # Read file through stream
+        dictionary = yaml.load(strean, Loader=yaml.FullLoader)
+        for key, value in dictionary.items():
+            return {k: v for k, v in value.items()}
 
     def Honda_Activa(self):
         fuel_capacity = 5.3                         # Litres
@@ -65,9 +66,9 @@ class Vehicles():
         Calculates the fuel for the vehicle during a journey
         """
         if self.vehicle=='dio':
-            initial_data = self.Honda_Dio()
+            initial_data = self.load_data()['Dio']
         if self.vehicle=='activa':
-            initial_data = self.Honda_Activa()
+            initial_data = self.Honda_Activa()['Activa']
 
             
         fuel_capacity = initial_data['fuel_capacity']                   # Litres

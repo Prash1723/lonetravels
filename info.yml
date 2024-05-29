@@ -1,0 +1,11 @@
+Vehicles_data:
+        Dio:
+                name: "Honda Dio"
+		max_speed: 90
+		mileage: 44
+                fuel_capacity: 5.3
+        Activa:
+                name: "Honda Activa"
+                max_speed: 90
+                mileage: 40
+                fuel_capacity: 5.3
