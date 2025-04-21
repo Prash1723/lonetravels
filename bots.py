@@ -39,7 +39,7 @@ cnx = mysql.connector.connect(host="localhost", user="rider", password="*******"
 mycursor = cnx.cursor()
 
 # Execute a query
-mycursor.execute("SELECT * FROM travel_diary;")
+mycursor.execute("SELECT * FROM travel_diary.vehicles;")
 
 # Fetch results
 result = mycursor.fetchall()
