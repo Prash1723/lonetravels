@@ -6,6 +6,8 @@ from rich.table import Table
 from rich.layout import Layout
 from rich.columns import Columns
 
+import mysql.connector
+
 import numpy as np
 import time
 from datetime import datetime
@@ -29,6 +31,23 @@ log = logging.getLogger("rich")
 FileOut = logging.FileHandler('app.log')
 
 log.addHandler(FileOut)
+
+# Establish mysql connection
+cnx = mysql.connector.connect(host="localhost", user="rider", password="*******", database="travel_diary")
+
+# Create cursor
+mycursor = cnx.cursor()
+
+# Execute a query
+mycursor.execute("SELECT * FROM travel_diary;")
+
+# Fetch results
+result = mycursor.fetchall()
+
+# Close the connection
+cnx.close()
+
+# Create cursor
 
 class Vehicles():
     """
