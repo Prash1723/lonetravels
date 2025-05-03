@@ -154,6 +154,22 @@ class Camera():
                 'battery': 180,                 # minutes
                 'memory': 599940*2              # minutes
                 }
+        if self.memory=='32gb':
+            if self.format=='FHD':
+                x = {
+                'battery': 180,                 # minutes
+                'memory': 2138*4,               # minutes
+                }
+            if self.format=='HD':
+                x = {
+                'battery': 180,                 # minutes
+                'memory': 7156*4,               # minutes
+                }
+            if self.format=='VGA':
+                x = {
+                'battery': 180,                 # minutes
+                'memory': 599940*4              # minutes
+                }
 
         return x
 
