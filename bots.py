@@ -73,6 +73,8 @@ class Vehicles():
         return {'fuel_capacity': fuel_capacity, 'mileage': mileage, 'optimum_speed': optimum_speed, 'speed': speed}
 
     def Honda_Activa(self):
+        mycursor.execute("SELECT name, fuel_capacity, mileage FROM travel_diary.vehicles WHERE name='Honda Dio'")
+        result = mycursor.fetchall() 
         fuel_capacity = 5.3                         # Litres
         mileage = 40                                # KMPL
         optimum_speed = np.arange(35,46,1)
