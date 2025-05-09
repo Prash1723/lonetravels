@@ -1,4 +1,4 @@
-from bots import Camera
+from bots import Camera, mileage_logger
 
 rc = Camera('8gb', 'HD')
 

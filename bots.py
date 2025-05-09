@@ -14,6 +14,13 @@ from datetime import datetime
 import datetime
 import logging
 
+from PIL import Image
+import os, pyperclip, re, send2trash
+from pytesseract import image_to_string
+
+# Assign Path
+path = os.path.dirname(os.path.realpath(__file__))
+
 rc = Console()
 
 # Format for logging
@@ -33,7 +40,7 @@ FileOut = logging.FileHandler('app.log')
 log.addHandler(FileOut)
 
 # Establish mysql connection
-cnx = mysql.connector.connect(host="localhost", user="rider", password="*******", database="travel_diary")
+cnx = mysql.connector.connect(host="localhost", user="rider", password="Delhi2mumbai@", database="travel_diary")
 
 # Create cursor
 mycursor = cnx.cursor()
@@ -225,3 +232,58 @@ class location():
     """
 
     #def place(self)
+
+class mileage_logger:
+    def __init__(self, text, img_path):
+        self.text = text
+        self.img_path = img_path
+
+    def image_parser(self):
+        """Parse image for the numbers/mileage"""
+        # Open Image
+        all_text = []
+
+        for root, dirs, filenames in os.walk(input_path):
+            for filename in filenames:
+                try:
+                    img = Image.open(input_path + filename)
+                    all_text.append(image_to_string(img))
+                    # Deleting the files scanned
+                    send2trash.send2trash(input_path + filename)
+                except:
+                    continue
+
+        text = str('\n'.join(all_text))
+        return text
+
+
+    def number_parse(text):
+        """Parse mileage number from the image"""
+        # Regex code
+        distance_regex = re.compile(r'''(
+            (\s|-|\.)?                                  # seperator
+            (\d{5})                                     # 5 digits
+            (\s|-|\.)?                                  # seperator
+            (\d{5})                                     # 5 digits
+        )''', re.VERBOSE)
+
+        matches = []
+        mileage = ''
+
+        # Extract and Arrange Phone Numbers
+        for groups in distance_regex.findall(text):
+            mileage = ''.join([groups[3], groups[5]])
+            matches.append(mileage)
+
+        if len(matches) > 0:
+            distinct_matches = list(dict.fromkeys(matches))
+
+            if len(matches)!=len(distinct_matches):
+                rc.log(str(len(matches) - len(distinct_matches)) + ' Duplicates Removed')
+            else:
+                rc.log('No duplicates found!')
+
+            pyperclip.copy('\n'.join(distinct_matches))
+            rc.log('CopieD to clipboard')
+        else:
+            rc.log('No mileage number found!!')
