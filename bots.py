@@ -40,7 +40,7 @@ FileOut = logging.FileHandler('app.log')
 log.addHandler(FileOut)
 
 # Establish mysql connection
-cnx = mysql.connector.connect(host="localhost", user="rider", password="Delhi2mumbai@", database="travel_diary")
+cnx = mysql.connector.connect(host="localhost", user="rider", password="**********", database="travel_diary")
 
 # Create cursor
 mycursor = cnx.cursor()
@@ -234,8 +234,7 @@ class location():
     #def place(self)
 
 class mileage_logger:
-    def __init__(self, text, img_path):
-        self.text = text
+    def __init__(self, img_path):
         self.img_path = img_path
 
     def image_parser(self):
@@ -257,7 +256,7 @@ class mileage_logger:
         return text
 
 
-    def number_parse(text):
+    def number_parse(self):
         """Parse mileage number from the image"""
         # Regex code
         distance_regex = re.compile(r'''(
@@ -274,7 +273,12 @@ class mileage_logger:
         for groups in distance_regex.findall(text):
             mileage = ''.join([groups[3], groups[5]])
             matches.append(mileage)
+        
+        return matches
 
+    def run(self):
+        text = self.image_parser()
+        matches = self.number_parse()
         if len(matches) > 0:
             distinct_matches = list(dict.fromkeys(matches))
 
