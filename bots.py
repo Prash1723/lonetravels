@@ -236,19 +236,20 @@ class location():
 class mileage_logger:
     def __init__(self, img_path):
         self.img_path = img_path
+        self.text = ''
 
     def image_parser(self):
         """Parse image for the numbers/mileage"""
         # Open Image
         all_text = []
 
-        for root, dirs, filenames in os.walk(input_path):
+        for root, dirs, filenames in os.walk(self.img_path):
             for filename in filenames:
                 try:
-                    img = Image.open(input_path + filename)
+                    img = Image.open(self.img_path + filename)
                     all_text.append(image_to_string(img))
                     # Deleting the files scanned
-                    send2trash.send2trash(input_path + filename)
+                    send2trash.send2trash(img_path + filename)
                 except:
                     continue
 
@@ -270,20 +271,20 @@ class mileage_logger:
         mileage = ''
 
         # Extract and Arrange Phone Numbers
-        for groups in distance_regex.findall(text):
+        for groups in distance_regex.findall(self.text):
             mileage = ''.join([groups[3], groups[5]])
             matches.append(mileage)
         
         return matches
 
     def run(self):
-        text = self.image_parser()
-        matches = self.number_parse()
-        if len(matches) > 0:
-            distinct_matches = list(dict.fromkeys(matches))
+        self.text.join(self.image_parser())
+        self.matches = self.number_parse()
+        if len(self.matches) > 0:
+            distinct_matches = list(dict.fromkeys(self.matches))
 
-            if len(matches)!=len(distinct_matches):
-                rc.log(str(len(matches) - len(distinct_matches)) + ' Duplicates Removed')
+            if len(self.matches)!=len(distinct_matches):
+                rc.log(str(len(self.matches) - len(distinct_matches)) + ' Duplicates Removed')
             else:
                 rc.log('No duplicates found!')
 
