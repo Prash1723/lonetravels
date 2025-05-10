@@ -6,7 +6,7 @@ from rich.table import Table
 from rich.layout import Layout
 from rich.columns import Columns
 
-import mysql.connector
+from db_connect import db_query
 
 import numpy as np
 import time
@@ -39,22 +39,22 @@ FileOut = logging.FileHandler('app.log')
 
 log.addHandler(FileOut)
 
-# Establish mysql connection
-cnx = mysql.connector.connect(host="localhost", user="rider", password="**********", database="travel_diary")
+#class db_connect:
+    #def __init__(self, query)
+        # Establish mysql connection
+        #cnx = mysql.connector.connect(host="localhost", user="rider", password="Delhi2mumbai@", database="travel_diary")
 
-# Create cursor
-mycursor = cnx.cursor()
+        # Create cursor
+        #mycursor = cnx.cursor()
 
-# Execute a query
-mycursor.execute("SELECT * FROM travel_diary.vehicles;")
+        # Execute a query
+        #mycursor.execute("SELECT * FROM travel_diary.vehicles;")
 
-# Fetch results
-result = mycursor.fetchall()
+        # Fetch results
+        #result = mycursor.fetchall()
 
-# Close the connection
-cnx.close()
-
-# Create cursor
+        # Close the connection
+        #cnx.close()
 
 class Vehicles():
     """
@@ -261,10 +261,8 @@ class mileage_logger:
         """Parse mileage number from the image"""
         # Regex code
         distance_regex = re.compile(r'''(
-            (\s|-|\.)?                                  # seperator
-            (\d{5})                                     # 5 digits
-            (\s|-|\.)?                                  # seperator
-            (\d{5})                                     # 5 digits
+            ((\s|-|\.)                                  # seperator
+            (\d{6})                                     # 6 digits
         )''', re.VERBOSE)
 
         matches = []
@@ -276,6 +274,12 @@ class mileage_logger:
             matches.append(mileage)
         
         return matches
+
+    def update_mileage(self):
+        """Update the database after ride"""
+        db_query.run(
+        "UPDATE travel_diary.vehicles SET mileage = @self.mileage WHERE name = @self.vehicle;"
+        )
 
     def run(self):
         self.text.join(self.image_parser())
@@ -289,6 +293,9 @@ class mileage_logger:
                 rc.log('No duplicates found!')
 
             pyperclip.copy('\n'.join(distinct_matches))
+
+            self.update_mileage()
+
             rc.log('CopieD to clipboard')
         else:
             rc.log('No mileage number found!!')
