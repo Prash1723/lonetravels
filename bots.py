@@ -281,6 +281,20 @@ class mileage_logger:
         "UPDATE travel_diary.vehicles SET mileage = @self.mileage WHERE name = @self.vehicle;"
         )
 
+    def refuels(self):
+        """Update the number of refuels done by rider"""
+        distance = db.query.run("SELECT distance FROM travel_diary.rides WHERE destination=='nashik'")
+
+        results = db.query.run("SELECT fuel_capacity, mileage FROM travel_diary.vehicles WHERE name=='honda dio'")
+
+        fuel_capacity = results[0]
+        mileage = results[1]
+
+        refuels = distance/(fuel_capacity*mileage)
+        db.query.run(
+            "UPDATE travel_diary.rides SET refueling=@refuels WHERE destination='nashik'"
+            )
+
     def run(self):
         self.text.join(self.image_parser())
         self.matches = self.number_parse()
